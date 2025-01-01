@@ -1,0 +1,4 @@
+# Ignore all files from results, test_imgs and test_videos folder
+results/
+test_imgs/
+test_videos/
