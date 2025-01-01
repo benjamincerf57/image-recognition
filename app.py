@@ -11,7 +11,7 @@ tab1, tab2, tab3 = st.tabs(["Image", "Video", "Webcam"])
 # Onglet Image
 with tab1:
     st.header("Test sur une image")
-    uploaded_image = st.file_uploader("Téléchargez une image", type=["jpg", "jpeg", "png"])
+    uploaded_image = st.file_uploader("Téléchargez une image", type=["jpg", "jpeg"])
     if uploaded_image is not None:
         # Processer l'image
         image = process_image(uploaded_image)
@@ -24,7 +24,7 @@ with tab2:
     if uploaded_video is not None:
         # Processer la vidéo
         video = process_video(uploaded_video)
-        st.video(video, format="video/mp4")
+        st.video(video)
 
 # Onglet Webcam
 with tab3:
