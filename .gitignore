@@ -2,3 +2,4 @@
 results/
 test_imgs/
 test_videos/
+__pycache__/
