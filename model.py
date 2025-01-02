@@ -63,7 +63,7 @@ def process_image(image):
 
     return image
 
-def process_video(video):
+def process_video(video, progress_bar):
     '''
     Process a video and return the detected objects as a saved mp4 file.
     '''
@@ -151,6 +151,10 @@ def process_video(video):
         if frame_count % 10 == 0:
             progress = (frame_count / frame_count_total) * 100  # frame_count_total étant le nombre total de frames
             print(f"{round(progress, 2)}% de la vidéo traitée...")
+
+        # Mettre à jour la barre de progression
+        progress = frame_count / frame_count_total
+        progress_bar.progress(progress)
 
     cap.release()
     out.release()

@@ -1,5 +1,6 @@
 import streamlit as st
 from model import process_image, process_video, process_webcam
+import time
 
 # Titre et description de l'app
 st.title("Image Recognition with DETR")
@@ -21,10 +22,21 @@ with tab1:
 with tab2:
     st.header("Test sur une vidéo")
     uploaded_video = st.file_uploader("Téléchargez une vidéo", type=["mp4"])
+    
     if uploaded_video is not None:
-        # Processer la vidéo
-        video = process_video(uploaded_video)
+        start_time = time.time()
+
+        # Créer la barre de progression
+        progress_bar = st.progress(0)
+        # Processer la vidéo avec l'état de progression
+        video = process_video(uploaded_video, progress_bar)
+        # Afficher la vidéo traitée
         st.video(video)
+
+        elapsed_time = time.time() - start_time
+        # Display the processing time
+        st.write(f"Processing time: {elapsed_time:.2f} seconds")
+
 
 # Onglet Webcam
 with tab3:
