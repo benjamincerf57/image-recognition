@@ -1,6 +1,7 @@
 import streamlit as st
 from model import process_image, process_video, process_webcam
 import time
+import cv2
 
 # Titre et description de l'app
 st.title("Image Recognition with DETR")
@@ -40,7 +41,20 @@ with tab2:
 
 # Onglet Webcam
 with tab3:
-    st.header("Test via la webcam")
-    if st.button("Activer la Webcam"):
-        # Processer la webcam
-        process_webcam()
+    st.header("Détection d'objets en temps réel via Webcam")
+    
+    start_button = st.button("Démarrer Webcam")
+    stop_button = st.button("Arrêter Webcam")
+    
+    # Si le bouton de démarrage est cliqué, démarrer la capture
+    if start_button:
+        stframe = st.empty()  # Placeholder pour afficher l'image
+        
+        # On lance la webcam et on affiche les frames
+        for annotated_frame in process_webcam(fps=10):
+            # Convertir l'image en format que Streamlit peut afficher
+            stframe.image(annotated_frame, channels="BGR", use_column_width=True)
+            
+            # Si on clique sur "Arrêter Webcam", on arrête la boucle
+            if stop_button:
+                break
