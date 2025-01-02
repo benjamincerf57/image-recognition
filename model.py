@@ -79,15 +79,14 @@ def process_video(video):
     if not cap.isOpened():
         raise ValueError("Could not open video")
 
-    # Créer une liste pour stocker les frames annotées
-    annotated_frames = []
-
     # FPS original de la vidéo
     fps = cap.get(cv2.CAP_PROP_FPS)
+    frame_count_total = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+    duration = frame_count_total / fps
 
-    # Si la vidéo a moins de 10 FPS, l'utiliser tel quel
-    target_fps = 10
-    delay = int(1000 / target_fps)  # Délai en ms entre chaque frame (temps d'attente pour limiter le FPS)
+    # N'executer le modèle que sur les vidéos de moins de 15 secondes
+    if duration > 15:
+        raise ValueError("The video is too long. Please upload a video of less than 15 seconds.")
 
     # Créer le dossier de sortie si il n'existe pas
     output_dir = 'results/videos'
@@ -97,19 +96,21 @@ def process_video(video):
     output_video_path = os.path.join(output_dir, 'output_video.mp4')
 
     # Créer un flux vidéo pour la vidéo annotée
+    target_fps = 10 # FPS cible pour la vidéo annotée
     fourcc = cv2.VideoWriter_fourcc(*'h264')
     out = cv2.VideoWriter(output_video_path, fourcc, target_fps, 
-                          (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
+                        (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))))
 
     frame_count = 0  # Compteur pour suivre le nombre de frames traitées
+    frame_interval = int(fps / target_fps)  # Interval de frames pour limiter le FPS
 
     while True:
         ret, frame = cap.read()
         if not ret:
             break  # Fin de la vidéo
 
-        # Limiter les prédictions à 10 FPS
-        if frame_count % int(fps / target_fps) == 0:  # On traite toutes les N-ème frames
+        # Traiter uniquement les frames nécessaires
+        if frame_count % frame_interval == 0:
             # Convertir la frame OpenCV en PIL.Image
             image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
@@ -148,17 +149,15 @@ def process_video(video):
 
         frame_count += 1
         if frame_count % 10 == 0:
-            print(f"{frame_count} frames traitées...")
-
-        # Limiter le FPS
-        cv2.waitKey(delay)
+            progress = (frame_count / frame_count_total) * 100  # frame_count_total étant le nombre total de frames
+            print(f"{round(progress, 2)}% de la vidéo traitée...")
 
     cap.release()
     out.release()
     print("Toutes les frames ont été annotées et enregistrées.")
 
     # Retourner le chemin du fichier vidéo sauvegardé
-    return output_video_path
+    return output_video_path    
 
 def process_webcam():
     # Simule une prédiction
