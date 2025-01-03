@@ -38,23 +38,3 @@ with tab2:
         elapsed_time = time.time() - start_time
         # Display the processing time
         st.write(f"Processing time: {elapsed_time:.2f} seconds")
-
-
-# Webcam tab
-with tab3:
-    st.header("Live object detection using your webcam 📹")
-    
-    start_button = st.button("Start Webcam")
-    stop_button = st.button("Stop Webcam")
-    
-    # Start the webcam if the start button is clicked
-    if start_button:
-        stframe = st.empty()  # Placeholder to display the webcam frames
-        
-        for annotated_frame in process_webcam(fps=10):
-            # Convert the annotated frame to the BGR format
-            stframe.image(annotated_frame, channels="BGR", use_column_width=True)
-            
-            # Stop the webcam if the stop button is clicked
-            if stop_button:
-                break
