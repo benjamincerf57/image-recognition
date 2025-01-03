@@ -5,10 +5,10 @@ import cv2
 
 # Title and description of the app
 st.title("Image Recognition with DETR")
-st.write("Welcome in our object detection app ! You can try to detect objects and persons on your images, videos or directly using your webcam !")
+st.write("Welcome in our object detection app ! You can try to detect objects and persons on your images and videos !")
 
 # Create 3 different tabs
-tab1, tab2, tab3 = st.tabs(["Image", "Video", "Webcam"])
+tab1, tab2 = st.tabs(["Image", "Video"])
 
 # Image tab
 with tab1:
