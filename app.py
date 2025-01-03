@@ -1,5 +1,5 @@
 import streamlit as st
-from model import process_image, process_video, process_webcam
+from model import process_image, process_video
 import time
 import cv2
 
