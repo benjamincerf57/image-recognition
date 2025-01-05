@@ -25,8 +25,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Étape 6: Copier tout le code dans l'image
 COPY . .
 
-# Étape 7: Exposer le port 8501 (port par défaut de Streamlit)
-EXPOSE 8501
+# Étape 7: Exposer le port 8080 (port par défaut de Google Cloud Run)
+EXPOSE 8080
 
 # Étape 8: Lancer l'application Streamlit
-CMD ["streamlit", "run", "app.py"]
+CMD ["streamlit", "run", "app.py", "--server.port=8080"]
