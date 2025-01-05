@@ -37,7 +37,7 @@ def process_image(image):
 
     # Load a font for the text
     try:
-        font = ImageFont.truetype("arial.ttf", size=50)
+        font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size=100)
     except IOError:
         font = ImageFont.load_default()
 
@@ -137,7 +137,7 @@ def process_video(video, progress_bar):
 
             # Load a font for the text
             try:
-                font = ImageFont.truetype("arial.ttf", size=15)
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", size=100)
             except IOError:
                 font = ImageFont.load_default()
 

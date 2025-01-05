@@ -38,3 +38,23 @@ with tab2:
         elapsed_time = time.time() - start_time
         # Display the processing time
         st.write(f"Processing time: {elapsed_time:.2f} seconds")
+
+# Markdown
+st.markdown("""
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <h2>📚 About the project</h2>
+    <p style="font-size: 12px;">This project was made by: Benjamin CERF</p>
+    <p style="font-size: 12px;">The model used is DETR (DEtection TRansformers) from Facebook. You can consult their presentation article about the model here: <a href="https://arxiv.org/abs/2005.12872">End-to-End Object Detection with Transformers</a>.</p>
+    <p style="font-size: 12px;">The model code is available on GitHub: <a href="https://github.com/facebookresearch/detr">Object Detection with DETR</a></p>
+""", unsafe_allow_html=True)
